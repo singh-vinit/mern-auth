@@ -7,7 +7,6 @@ type Props = {
 };
 
 const Bottom = ({ text, to, link }: Props) => {
-  console.log(to);
   return (
     <div className="text-sm font-semibold lowercase m-4">
       {text}
