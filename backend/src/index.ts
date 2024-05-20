@@ -13,14 +13,14 @@ mongoose
   .catch((err) => console.log(err));
 
 const app = express();
-app.use(cookieParser());
-app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5137",
+    origin: "http://localhost:5173",
   })
 );
+app.use(cookieParser());
+app.use(express.json());
 
 app.use("/api/v1", userRoutes);
 
