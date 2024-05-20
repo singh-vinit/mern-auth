@@ -4,7 +4,9 @@ type Props = {
 
 const Button = ({ text }: Props) => {
   return (
-    <button className="w-full mt-3 rounded-md bg-black text-white text-lg">{text}</button>
+    <button className="w-full mt-4 p-1 rounded-md bg-black text-white text-lg font-semibold hover:bg-gray-900">
+      {text}
+    </button>
   );
 };
 
