@@ -7,18 +7,29 @@ import InputBox from "../components/InputBox";
 import Subheading from "../components/Subheading";
 import { useState } from "react";
 import { BACKEND_URL } from "../config";
+import { useNavigate } from "react-router-dom";
+
 const signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function submitHandler() {
-    axios.post(
-      `${BACKEND_URL}/signup`,
-      { firstName, lastName, username, password },
-      { withCredentials: true }
-    );
+    axios
+      .post(
+        `${BACKEND_URL}/signup`,
+        { firstName, lastName, username, password },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res.data);
+        navigate("/signin");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
