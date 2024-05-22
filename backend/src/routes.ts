@@ -36,6 +36,11 @@ router.post("/signup", async (req, res) => {
     const hashPassword = await newUser.createHash(req.body.password);
     newUser.password = hashPassword;
     await newUser.save();
+    const token = jwt.sign({ userId: newUser?._id }, JWT_SECRET);
+    res.cookie("token", token, {
+      maxAge: 60 * 60 * 1000,
+      httpOnly: true,
+    });
     return res.status(200).json({ message: "user created successfully" });
   } catch (err) {
     console.log(err);
@@ -60,7 +65,7 @@ router.post("/signin", async (req, res) => {
     }
     const token = jwt.sign({ userId: user?._id }, JWT_SECRET);
     res.cookie("token", token, {
-      maxAge: 30 * 60 * 1000,
+      maxAge: 60 * 60 * 1000,
       httpOnly: true,
     });
     return res.status(200).json({ message: "logged in" });
