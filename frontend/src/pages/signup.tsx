@@ -8,15 +8,18 @@ import Subheading from "../components/Subheading";
 import { useState } from "react";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   function submitHandler() {
+    setIsLoading(true);
     axios
       .post(
         `${BACKEND_URL}/signup`,
@@ -24,11 +27,13 @@ const signup = () => {
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data);
+        setIsLoading(false);
+        toast(res.data.message);
         navigate("/signin");
       })
       .catch((err) => {
-        console.log(err);
+        setIsLoading(false);
+        toast(err.response.data.message);
       });
   }
 
@@ -60,7 +65,7 @@ const signup = () => {
         value="123456"
         setValue={setPassword}
       />
-      <Button text="sign in" handler={submitHandler} />
+      <Button text="sign in" handler={submitHandler} loading={isLoading} />
       <Bottom text="already have an account?" to="/signin" link="signin" />
     </Card>
   );
