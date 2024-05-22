@@ -29,7 +29,7 @@ const signup = () => {
       .then((res) => {
         setIsLoading(false);
         toast(res.data.message);
-        navigate("/signin");
+        navigate("/home");
       })
       .catch((err) => {
         setIsLoading(false);

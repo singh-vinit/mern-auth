@@ -5,6 +5,7 @@ import Navbtn from "../components/Navbtn";
 import Card from "../components/Card";
 import Heading from "../components/Heading";
 import { BACKEND_URL } from "../config";
+import { toast } from "react-toastify";
 
 interface Info {
   username: string;
@@ -29,9 +30,9 @@ const home = () => {
   }
   function logoutHandler() {
     axios
-      .post(`${BACKEND_URL}/logout`)
+      .post(`${BACKEND_URL}/logout`, {}, { withCredentials: true })
       .then((res) => {
-        console.log(res);
+        toast(res.data.message);
         navigate("/signin");
       })
       .catch((err) => {
@@ -58,7 +59,7 @@ const home = () => {
 
   return (
     <div>
-      <div className="p-3 bg-cyan-100 flex justify-between items-center relative">
+      <div className="p-3 shadow-lg flex justify-between items-center relative">
         <div className="text-xl font-bold">Home</div>
         <button
           className="border-2 border-black rounded-full w-10 h-10 font-bold capitalize"
@@ -67,7 +68,7 @@ const home = () => {
           {userInfo.firstName[0]}
         </button>
         {isOpen ? (
-          <div className="border border-black absolute right-1 top-16">
+          <div className="border border-gray-500 absolute right-1 top-16">
             <div className="hover:bg-gray-100 p-2 text-center">
               {userInfo.username}
             </div>
